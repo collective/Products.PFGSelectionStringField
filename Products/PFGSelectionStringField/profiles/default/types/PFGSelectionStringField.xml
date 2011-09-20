@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<object name="PFGSelectionStringField"
+   meta_type="Factory-based Type Information with dynamic views"
+   i18n:domain="Products.PFGSelectionStringField" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <property name="title" i18n:translate="">Selection String Field</property>
+ <property name="description"
+     i18n:translate="">Selection String Field</property>
+ <property name="content_icon">ListField.gif</property>
+ <property name="content_meta_type">PFGSelectionStringField</property>
+ <property name="product">PFGSelectionStringField</property>
+ <property name="factory">addPFGSelectionStringField</property>
+ <property name="immediate_view">fg_base_view_p3</property>
+ <property name="global_allow">False</property>
+ <property name="filter_content_types">False</property>
+ <property name="allowed_content_types" />
+ <property name="allow_discussion">False</property>
+ <property name="default_view">fg_base_view_p3</property>
+ <property name="view_methods">
+  <element value="fg_base_view_p3"/>
+ </property>
+ <alias from="(Default)" to="(dynamic view)"/>
+ <alias from="edit" to="atct_edit"/>
+ <alias from="sharing" to="@@sharing"/>
+ <alias from="view" to="(selected layout)"/>
+ <action title="View" action_id="view" category="object" condition_expr=""
+    url_expr="string:${object_url}/view" visible="True" i18n:attributes="title" i18n:domain="plone">
+  <permission value="View"/>
+ </action>
+ <action title="Edit" action_id="edit" category="object" condition_expr=""
+    url_expr="string:${object_url}/edit" visible="True" i18n:attributes="title" i18n:domain="plone">
+  <permission value="Modify portal content"/>
+ </action>
+</object>

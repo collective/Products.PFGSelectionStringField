@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+ <object name="PFGSelectionStringField"
+    meta_type="Filesystem Directory View"
+    directory="Products.PFGSelectionStringField:skins/PFGSelectionStringField"/>
+ <skin-path name="*">
+  <layer name="PFGSelectionStringField"
+     insert-after="PloneFormGen"/>
+ </skin-path>
+</object>

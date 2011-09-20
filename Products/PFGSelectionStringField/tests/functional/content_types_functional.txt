@@ -1,0 +1,334 @@
+Initial imports and defines.
+----
+    >>> from Products.CMFCore.utils import getToolByName
+    >>> portal_url =  portal.absolute_url()
+
+Setting up.
+----
+    >>> try:
+    ...     from Testing.testbrowser import Browser
+    ... except ImportError:
+    ...     from Products.Five.testbrowser import Browser
+    >>> browser = Browser()
+
+For debugging.
+----
+    >>> browser.handleErrors = True
+    >>> portal.error_log._ignored_exceptions = ()
+
+Turn off portlets.
+----
+    >>> from zope.component import getUtility, getMultiAdapter
+    >>> from plone.portlets.interfaces import IPortletManager
+    >>> from plone.portlets.interfaces import IPortletAssignmentMapping
+
+    >>> left_column = getUtility(IPortletManager, name=u"plone.leftcolumn")
+    >>> left_assignable = getMultiAdapter((portal, left_column), IPortletAssignmentMapping)
+    >>> for name in left_assignable.keys():
+    ...     del left_assignable[name]
+
+    >>> right_column = getUtility(IPortletManager, name=u"plone.rightcolumn")
+    >>> right_assignable = getMultiAdapter((portal, right_column), IPortletAssignmentMapping)
+    >>> for name in right_assignable.keys():
+    ...     del right_assignable[name]
+
+Log in as the portal owner.
+----
+    >>> browser.open(portal_url)
+    >>> from Products.PloneTestCase.setup import portal_owner, default_password
+    >>> browser.open(portal_url + '/login_form?came_from=' + portal_url)
+    >>> browser.getControl(name='__ac_name').value = portal_owner
+    >>> browser.getControl(name='__ac_password').value = default_password
+    >>> browser.getControl(name='submit').click()
+
+Verify that we can create FormFolder under portal but not PFGSelectionStringField.
+----
+    >>> browser.open(portal_url)
+    >>> browser.getLink(id='formfolder').url.endswith("createObject?type_name=FormFolder")
+    True
+    >>> browser.getLink(id='pfgselectionstringfield').url.endswith("createObject?type_name=PFGSelectionStringField")
+    Traceback (most recent call last):
+    ...
+    LinkNotFoundError
+
+Add FormFolder under portal.
+----
+    >>> browser.open(portal_url)
+    >>> browser.getLink(id='formfolder').click()
+    >>> browser.getControl(name='title').value = "Form Folder"
+    >>> browser.getControl(name="actionAdapter:list").value = []
+    >>> browser.getControl('Save').click()
+    >>> browser.getLink('Publish').click()
+    >>> 'form-folder' in portal.objectIds()
+    True
+    >>> form = portal['form-folder']
+    >>> form_url = form.absolute_url()
+    >>> form.getId()
+    'form-folder'
+    >>> form.Title()
+    'Form Folder'
+
+Edit the Form Folder
+--------------------
+    >>> browser.getLink('Edit').click()
+    >>> browser.getControl(name="thanksPage").value = ['']
+    >>> browser.getControl('Save').click()
+    >>> browser.getLink('Edit').click()
+    >>> browser.getLink('Contents').click()
+    >>> browser.getLink('All').click()
+    >>> browser.getControl('Delete').click()
+
+Verify that we can create FormFolder under portal but not PFGSelectionStringField.
+----
+    >>> browser.getLink(id='pfgselectionstringfield').url.endswith("createObject?type_name=PFGSelectionStringField")
+    True
+
+Add PFGSelectionStringField.
+----
+    >>> browser.getLink(id='pfgselectionstringfield').click()
+    >>> browser.getControl(name='title').value = "Selection String Field"
+    >>> browser.getControl(name="fgVocabulary:lines").value = 'aaa\nbbb|BBB\nccc|CCC|Description of C\näää\nooo|ÖÖÖ\naoa|ÅÅÅ|Descripion of Å\näöå|ÄÖÅ|Description of ÄÖÅ'
+    >>> browser.getControl(name="fgFormat").value = ['radio']
+    >>> browser.getControl('Save').click()
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 404: Not Found
+
+    >>> browser.open(form_url)
+
+    >>> 'value="aaa"' in browser.contents
+    True
+    >>> 'value="bbb"' in browser.contents
+    True
+    >>> 'BBB' in browser.contents
+    True
+    >>> 'value="ccc"' in browser.contents
+    True
+    >>> 'CCC' in browser.contents
+    True
+    >>> 'Description of C' in browser.contents
+    True
+    >>> 'name="selection-string-field_ccc"' in browser.contents
+    True
+    >>> field = form['selection-string-field']
+    >>> field_url = field.absolute_url()
+
+Hide Field
+----------
+    >>> browser.open(field_url)
+    >>> browser.getLink('Edit').click()
+    >>> browser.getControl(name="hidden:boolean").value = 'on'
+    >>> browser.getControl("Save").click()
+    >>> browser.url
+    'http://nohost/plone/form-folder/selection-string-field/view'
+    >>> 'name="selection-string-field_ccc"' in browser.contents
+    False
+
+Uncheck Hidden and change field type to select.
+-----------------------------------------------
+    >>> browser.open(field_url)
+    >>> browser.getLink('Edit').click()
+    >>> browser.getControl(name="hidden:boolean").value = ''
+    >>> browser.getControl(name="fgFormat").value = ['select']
+    >>> browser.getControl("Save").click()
+    >>> browser.url
+    'http://nohost/plone/form-folder/selection-string-field/view'
+    >>> '<option value="aaa">aaa</option>' in browser.contents
+    True
+    >>> '<option value="bbb">BBB</option>' in browser.contents
+    True
+    >>> '<option value="ccc">CCC</option>' in browser.contents
+    True
+    >>> '<option value="äää">äää</option>' in browser.contents
+    True
+    >>> '<option value="ooo">ÖÖÖ</option>' in browser.contents
+    True
+    >>> '<option value="aoa">ÅÅÅ</option>' in browser.contents
+    True
+    >>> '<option value="äöå">ÄÖÅ</option>' in browser.contents
+    True
+    >>> 'name="selection-string-field_SELECT"' in browser.contents
+    True
+
+Change field type to flex.
+--------------------------
+    >>> browser.getLink('Edit').click()
+    >>> browser.getControl(name="fgFormat").value = ['flex']
+    >>> browser.getControl("Save").click()
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 404: Not Found
+    >>> browser.open(field_url)
+    >>> '<option value="aaa">aaa</option>' in browser.contents
+    True
+    >>> '<option value="bbb">BBB</option>' in browser.contents
+    True
+    >>> '<option value="ccc">CCC</option>' in browser.contents
+    True
+    >>> '<option value="äää">äää</option>' in browser.contents
+    True
+    >>> '<option value="ooo">ÖÖÖ</option>' in browser.contents
+    True
+    >>> '<option value="aoa">ÅÅÅ</option>' in browser.contents
+    True
+    >>> '<option value="äöå">ÄÖÅ</option>' in browser.contents
+    True
+    >>> 'name="selection-string-field_SELECT"' in browser.contents
+    True
+    >>> browser.getLink('Edit').click()
+    >>> browser.getControl(name="fgFormat").value = ['radio']
+    >>> browser.getControl("Save").click()
+
+Log out and submit
+----
+    >>> browser.getLink('Log out').click()
+    >>> browser.open(field_url)
+
+Submit without selecting anything.
+----
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'No Input' in browser.contents
+    True
+
+Submit with selection.
+----
+    >>> browser.open(field_url)
+    >>> browser.getControl(name="selection-string-field").value = ['aaa']
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'aaa' in browser.contents
+    True
+    >>> browser.open(field_url)
+    >>> browser.getControl(name="selection-string-field").value = ['bbb']
+    >>> browser.getControl(name="selection-string-field_ccc").value = 'Some Description'
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'BBB' in browser.contents
+    False
+    >>> 'Some Description' not in browser.contents
+    True
+    >>> browser.open(field_url)
+    >>> browser.getControl(name="selection-string-field").value = ['ccc']
+    >>> browser.getControl(name="selection-string-field_ccc").value = 'Some Description'
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'CCC' in browser.contents
+    False
+    >>> 'Some Description' not in browser.contents
+    True
+
+Go to Form
+----
+    >>> browser.open(form_url)
+    >>> browser.getControl(name="selection-string-field").value = ['aaa']
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'aaa' in browser.contents
+    True
+    >>> browser.open(form_url)
+    >>> browser.getControl(name="selection-string-field").value = ['bbb']
+    >>> browser.getControl(name="selection-string-field_ccc").value = 'Some Description'
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'BBB' in browser.contents
+    False
+    >>> 'Some Description' in browser.contents
+    False
+
+Log in and add thank you page to Form Folder
+---------------------------------------------
+    >>> browser.open(portal_url + '/login_form?came_from=' + portal_url)
+    >>> browser.getControl(name='__ac_name').value = portal_owner
+    >>> browser.getControl(name='__ac_password').value = default_password
+    >>> browser.getControl(name='submit').click()
+
+    >>> browser.open(form_url)
+    >>> browser.getLink(id="formthankspage").click()
+    >>> browser.getControl(name="title").value = 'thank-you'
+    >>> browser.getControl('Save').click()
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 404: Not Found
+    >>> browser.open(form_url)
+    >>> browser.getLink('Edit').click()
+    >>> browser.getControl(name="thanksPage").value = ['thank-you']
+    >>> browser.getControl('Save').click()
+
+Log out and go to Form Folder
+-------------------------------
+    >>> browser.open(portal_url)
+    >>> browser.getLink('Log out').click()
+    >>> browser.open(form_url)
+
+    >>> browser.getControl(name="selection-string-field").value = ['bbb']
+    >>> browser.getControl(name="selection-string-field_ccc").value = 'Some Description'
+    >>> browser.getControl(name="form_submit").click()
+
+    >>> 'BBB' in browser.contents
+    True
+    >>> 'Some Description' in browser.contents
+    False
+
+    >>> browser.open(form_url)
+    >>> browser.getControl(name="selection-string-field").value = ['ccc']
+    >>> browser.getControl(name="selection-string-field_ccc").value = 'Some Description'
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'CCC' in browser.contents
+    True
+    >>> 'Some Description' in browser.contents
+    True
+    >>> browser.open(form_url)
+    >>> browser.getControl(name="selection-string-field").value = ['ccc']
+    >>> browser.getControl(name="selection-string-field_ccc").value = 'Some Description ÄÖÅ'
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'CCC' in browser.contents
+    True
+    >>> 'Some Description ÄÖÅ' in browser.contents
+    True
+    >>> browser.open(form_url)
+    >>> browser.getControl(name="selection-string-field").value = ['äää']
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'äää' in browser.contents
+    True
+    >>> browser.open(form_url)
+    >>> browser.getControl(name="selection-string-field").value = ['ooo']
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'ÖÖÖ' in browser.contents
+    True
+    >>> browser.open(form_url)
+    >>> browser.getControl(name="selection-string-field").value = ['aoa']
+    >>> browser.getControl(name="selection-string-field_aoa").value = 'Some Description ÄÖÅ'
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'ÅÅÅ' in browser.contents
+    True
+    >>> 'Some Description ÄÖÅ' in browser.contents
+    True
+    >>> browser.open(form_url)
+    >>> browser.getControl(name="selection-string-field").value = ['äöå']
+    >>> browser.getControl(name="selection-string-field_äöå").value = 'Some Description'
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'ÄÖÅ' in browser.contents
+    True
+    >>> 'Some Description' in browser.contents
+    False
+
+
+
+Log in and select select instead of radio.
+-------------------------------------------
+    >>> browser.open(portal_url + '/login_form?came_from=' + portal_url)
+    >>> browser.getControl(name='__ac_name').value = portal_owner
+    >>> browser.getControl(name='__ac_password').value = default_password
+    >>> browser.getControl(name='submit').click()
+    >>> browser.open(field_url)
+    >>> browser.getLink('Edit').click()
+    >>> browser.getControl(name="fgFormat").value = ['select']
+    >>> browser.getControl("Save").click()
+
+Log out and go to Form Folder
+-------------------------------
+    >>> browser.open(portal_url)
+    >>> browser.getLink('Log out').click()
+    >>> browser.open(form_url)
+    >>> browser.getControl(name="selection-string-field").value = ['bbb']
+    >>> browser.getControl(name="selection-string-field_SELECT").value = 'Some Description'
+    >>> browser.getControl(name="form_submit").click()
+    >>> 'BBB' in browser.contents
+    True
+    >>> 'Some Description' in browser.contents
+    True

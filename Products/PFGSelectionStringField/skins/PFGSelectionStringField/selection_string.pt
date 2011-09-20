@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <!-- Selection String Widgets -->
+
+    <tal:block tal:condition="python: field.getHidden()">
+
+    <metal:view_macro define-macro="view"
+                      tal:define="vocab python:field.Vocabulary(here);
+                                  value python:accessor();
+                                  display python:here.displayValue(vocab, value)"
+                      tal:replace="structure display" />
+
+    <metal:define define-macro="edit">
+
+        <metal:use use-macro="field_macro | here/widgets/field/macros/edit">
+
+
+            <metal:fill fill-slot="widget_body"
+                        tal:define="vocab python:field.Vocabulary(here);
+                                    vlen python:len(vocab);
+                                    format python:widget.format">
+
+                <tal:shortVocab condition="python:(vlen &lt; 4 and format == 'flex') or (format == 'radio')">
+
+                    <!-- Radio when the vocab is short < 4 -->
+                    <input type="hidden"
+                           tal:attributes="name string:ssf_id;
+                                           value string:${fieldName}"
+                           />
+                    <tal:radios repeat="item vocab">
+
+                        <input class="noborder"
+                               type="radio"
+                               tal:attributes="name fieldName;
+                                               id string:${fieldName}_${repeat/item/number};
+                                               checked python:here.checkSelected(item, value);
+                                               value python:item[0];"
+                               />
+
+<!--                        <label tal:content="python:here.translate(vocab.getMsgId(item), default=vocab.getValue(item))"-->
+<!--                               i18n:translate=""-->
+<!--                               tal:attributes="for string:${fieldName}_${repeat/item/number}" />-->
+
+                        <label tal:content="python:item[1][0]"
+                               i18n:translate=""
+                               tal:attributes="for string:${fieldName}_${repeat/item/number}" />
+
+                        <br />
+                        <div tal:condition="python:item[1][1]">
+                        <span tal:replace="python:item[1][1]" />
+                        <input type="text"
+                               tal:define="item_zero python:item[0]"
+                               tal:attributes="name string:${fieldName}_${item_zero}"
+                               value="" />
+                        </div>
+
+                    </tal:radios>
+
+                </tal:shortVocab>
+
+                <tal:longVocab condition="python:(vlen >= 4 and format == 'flex') or (format in ('select', 'pulldown'))">
+
+                    <!-- Pulldown when longer -->
+                    <select tal:attributes="name fieldName;
+                                            id fieldName;">
+
+                        <option tal:repeat="item vocab"
+                                tal:attributes="value python:item[0];
+                                                selected python:here.checkSelected(item, value) and 'selected' or None"
+                                tal:content="python:item[1][0]"
+                                i18n:translate=""
+                                />
+
+                    </select>
+                    <br />
+                    <input type="text"
+                               tal:attributes="name string:${fieldName}_SELECT"
+                               value="" />
+
+                </tal:longVocab>
+
+            </metal:fill>
+
+        </metal:use>
+
+    </metal:define>
+
+    <div metal:define-macro="search">
+        <div metal:use-macro="here/widgets/selection/macros/edit" />
+    </div>
+
+    </tal:block>
+
+  </body>
+
+</html>

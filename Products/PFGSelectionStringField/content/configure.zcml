@@ -1,0 +1,13 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="Products.PFGSelectionStringField">
+
+  <class class=".field.StringVocabularyField">
+    <require
+        permission="zope2.View"
+        interface="..interfaces.IPFGSelectionStringField"
+        />
+  </class>
+
+</configure>

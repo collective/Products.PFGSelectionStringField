@@ -1,0 +1,23 @@
+Creating PFGSelectionStringField
+================================
+    >>> from Products.PFGSelectionStringField.content import PFGSelectionStringField
+    >>> field = PFGSelectionStringField('field')
+    >>> field
+     <PFGSelectionStringField at field>
+    >>> field.portal_type
+    'PFGSelectionStringField'
+
+    >>> from Products.PFGSelectionStringField.interfaces import IPFGSelectionStringField
+    >>> IPFGSelectionStringField.providedBy(field)
+    True
+
+    >>> field.schema
+    <Products.Archetypes.Schema.Schema object at ...>
+
+    >>> field._at_rename_after_creation
+    True
+
+    >>> names = [field.getName() for field in field.schema.getSchemataFields('default')]
+    >>> names
+    ['id', 'title', 'description', 'required', 'hidden', 'fgDefault', 'fgVocabulary', 'fgFormat', 'subject', 'relatedItems', 'location', 'language', 'effectiveDate', 'expirationDate', 'creation_date', 'modification_date', 'creators', 'contributors', 'rights', 'allowDiscussion', 'excludeFromNav']
+
