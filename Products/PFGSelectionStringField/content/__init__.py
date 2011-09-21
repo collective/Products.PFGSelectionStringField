@@ -1,1 +1,1 @@
-from field import PFGSelectionStringField
+# from field import PFGSelectionStringField

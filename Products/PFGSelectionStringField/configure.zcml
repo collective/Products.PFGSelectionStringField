@@ -1,21 +1,18 @@
+<?xml version="1.0"?>
 <configure
-    xmlns="http://namespaces.zope.org/zope"
     xmlns:five="http://namespaces.zope.org/five"
-    xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns="http://namespaces.zope.org/zope"
     i18n_domain="Products.PFGSelectionStringField">
 
-<!--  <include package="Products.PloneFormGen" />-->
-  <include package="Products.CMFCore" />
+<!--   <include package="Products.CMFCore" /> -->
 
+  <five:registerPackage package="." initialize=".initialize" />
+  <include file="skins.zcml" />
   <include package=".browser" />
   <include package=".content" />
-  <include file="skins.zcml" />
-
-<!--  <permission-->
-<!--      id="Products.PFGSelectionStringField.Add"-->
-<!--      title="Add PFGSelectionStringField"-->
-<!--      />-->
+  <includeDependencies package="." />
 
   <genericsetup:registerProfile
       name="default"

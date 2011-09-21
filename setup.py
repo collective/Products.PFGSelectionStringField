@@ -1,15 +1,18 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
+
 import os
+
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = read('Products', 'PFGSelectionStringField', 'version.txt')[:-1]
+version = read('Products', 'PFGSelectionStringField', 'version.txt').strip()
 
 long_description = (
     open("README.txt").read() + "\n" +
-    open(os.path.join("docs", "INSTALL.txt")).read() + "\n" +
     open(os.path.join("docs", "HISTORY.txt")).read() + "\n" +
+    open(os.path.join("docs", "INSTALL.txt")).read() + "\n" +
     open(os.path.join("docs", "CREDITS.txt")).read()
     )
 
@@ -27,15 +30,20 @@ setup(name='Products.PFGSelectionStringField',
       author='Taito Horiuchi',
       author_email='taito.horiuchi@gmail.com',
       url='http://pypi.python.org/pypi/Products.PFGSelectionStringField',
-      license='GPL',
+      license='BSD',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['Products'],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
           'Products.PloneFormGen',
+          'hexagonit.testing',
+          'plone.app.testing',
+          'plone.browserlayer',
+          'mock',
           'setuptools',
           'unittest2',
+          'zope.i18nmessageid',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
@@ -44,6 +52,4 @@ setup(name='Products.PFGSelectionStringField',
       [z3c.autoinclude.plugin]
       target = plone
       """,
-      setup_requires=["PasteScript"],
-      paster_plugins=["ZopeSkel"],
       )

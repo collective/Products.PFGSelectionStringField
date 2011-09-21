@@ -1,10 +1,12 @@
-import unittest2 as unittest
 from Products.CMFCore.utils import getToolByName
-from Products.PFGSelectionStringField.tests.base import PFGSelectionStringFieldTestCase
+from Products.PFGSelectionStringField.tests.base import IntegrationTestCase
 
-class TestSetup(PFGSelectionStringFieldTestCase):
 
-    def afterSetUp(self):
+class TestSetup(IntegrationTestCase):
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+
         self.catalog = getToolByName(self.portal, 'portal_catalog')
         self.types = getToolByName(self.portal, 'portal_types')
         self.wftool = getToolByName(self.portal, 'portal_workflow')
@@ -23,6 +25,24 @@ class TestSetup(PFGSelectionStringFieldTestCase):
     def test_is_pfg_selection_string_field_installed(self):
         self.failUnless(self.installer.isProductInstalled('PFGSelectionStringField'))
 
+    def test_invokeFactory(self):
+        from plone.app.testing import TEST_USER_ID
+        from plone.app.testing import setRoles
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        import transaction
+        transaction.commit()
+        self.portal.invokeFactory(
+            'FormFolder',
+            'formfolder',
+            title='Form Folder',
+        )
+        folder = self.portal.formfolder
+        folder.invokeFactory(
+            'PFGSelectionStringField',
+            'field',
+            title='Selection String Field',
+        )
+
     def testSkinLayersInstalled(self):
         self.failUnless('PFGSelectionStringField' in self.skins.objectIds())
 
@@ -31,7 +51,7 @@ class TestSetup(PFGSelectionStringFieldTestCase):
         for type in self.content_types:
             self.failUnless(type in self.types.objectIds())
 
-    def test_cart_folder_content_type(self):
+    def test_PFGSelectionStringField_content_type(self):
         item = self.types.getTypeInfo('PFGSelectionStringField')
         self.assertEquals('Selection String Field', item.title)
         self.assertEquals('Selection String Field', item.description)
@@ -75,9 +95,3 @@ class TestSetup(PFGSelectionStringFieldTestCase):
     # Workflow
     def test_workflow(self):
         self.assertEquals((), self.wftool.getChainForPortalType('PFGSelectionStringField'))
-
-
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestSetup))
-    return suite

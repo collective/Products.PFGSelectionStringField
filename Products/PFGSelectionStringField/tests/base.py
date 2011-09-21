@@ -1,35 +1,52 @@
-try:
-    from Zope2.App import zcml
-except ImportError:
-    from Products.Five import zcml
-from Products.Five import fiveconfigure
-from Testing import ZopeTestCase as ztc
-from Products.PloneTestCase import PloneTestCase as ptc
-from Products.PloneTestCase.layer import onsetup
+from plone.app.testing import FunctionalTesting
+from plone.app.testing import IntegrationTesting
+from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import PloneSandboxLayer
+from plone.testing import z2
 
-@onsetup
-def setup_pfg_selection_string_field():
+import unittest2 as unittest
 
-    fiveconfigure.debug_mode = True
 
-    import Products.PloneFormGen
-    zcml.load_config('configure.zcml', Products.PloneFormGen)
-    import Products.PFGSelectionStringField
-    zcml.load_config('configure.zcml', Products.PFGSelectionStringField)
+class PFGSelectionStringFieldLayer(PloneSandboxLayer):
 
-    fiveconfigure.debug_mode = False
+    defaultBases = (PLONE_FIXTURE,)
 
-    ztc.installProduct('PFGSelectionStringField')
-ztc.installProduct('PloneFormGen')
-#ztc.installProduct('PFGSelectionStringField')
+    def setUpZope(self, app, configurationContext):
+        """Set up Zope."""
+        # Load ZCML
+        import Products.PloneFormGen
+        self.loadZCML(package=Products.PloneFormGen)
+        z2.installProduct(app, 'Products.PloneFormGen')
+        import Products.PFGSelectionStringField
+        self.loadZCML(package=Products.PFGSelectionStringField)
+        z2.installProduct(app, 'Products.PFGSelectionStringField')
 
-setup_pfg_selection_string_field()
-ptc.setupPloneSite(products=['PloneFormGen', 'PFGSelectionStringField'])
-class PFGSelectionStringFieldTestCase(ptc.PloneTestCase):
-    """We use this base class for all the tests in this package.
-    If necessary, we can put common utility or setup code in here.
-    """
+    def setUpPloneSite(self, portal):
+        """Set up Plone."""
+        # Install into Plone site using portal_setup
+        self.applyProfile(portal, 'Products.PloneFormGen:default')
+        self.applyProfile(portal, 'Products.PFGSelectionStringField:default')
 
-class PFGSelectionStringFieldFunctionalTestCase(ptc.FunctionalTestCase):
-    """Test case class used for functional (doc-)tests
-    """
+    def tearDownZope(self, app):
+        """Tear down Zope."""
+        z2.uninstallProduct(app, 'Products.PloneFormGen')
+        z2.uninstallProduct(app, 'Products.PFGSelectionStringField')
+
+
+FIXTURE = PFGSelectionStringFieldLayer()
+INTEGRATION_TESTING = IntegrationTesting(
+    bases=(FIXTURE,), name="PFGSelectionStringFieldLayer:Integration")
+FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(FIXTURE,), name="PFGSelectionStringFieldLayer:Functional")
+
+
+class IntegrationTestCase(unittest.TestCase):
+    """Base class for integration tests."""
+
+    layer = INTEGRATION_TESTING
+
+
+class FunctionalTestCase(unittest.TestCase):
+    """Base class for functional tests."""
+
+    layer = FUNCTIONAL_TESTING

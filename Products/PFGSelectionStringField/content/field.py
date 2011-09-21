@@ -1,43 +1,25 @@
-import cgi
 from AccessControl import ClassSecurityInfo
-from zope.interface import implements
+from Products.ATContentTypes.content.base import registerATCT
+from Products.Archetypes.public import DisplayList
+from Products.Archetypes.public import LinesField
+from Products.Archetypes.public import LinesWidget
+from Products.Archetypes.public import Schema
+from Products.Archetypes.public import SelectionWidget
+from Products.Archetypes.public import StringField
 from Products.CMFCore.permissions import View
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
-from Products.ATContentTypes.content.base import registerATCT
-from Products.Archetypes.public import (
-    DisplayList,
-    Schema,
-    LinesField,
-    StringField,
-    LinesWidget,
-    SelectionWidget,
-)
-from Products.PloneFormGen.content.fields import FGSelectionField
-from Products.PloneFormGen.content.fieldsBase import (
-    BaseFieldSchemaStringDefault,
-    finalizeFieldSchema,
-    vocabularyOverrideField
-)
 from Products.PFGSelectionStringField.config import PROJECTNAME
 from Products.PFGSelectionStringField.interfaces import IPFGSelectionStringField
+from Products.PloneFormGen.content.fields import FGSelectionField
+from Products.PloneFormGen.content.fieldsBase import BaseFieldSchemaStringDefault
+from Products.PloneFormGen.content.fieldsBase import finalizeFieldSchema
+from Products.PloneFormGen.content.fieldsBase import vocabularyOverrideField
+from Products.PloneFormGen.content.fieldsBase import vocabularyField
+from zope.interface import implements
 
-vocabularyField = \
-    LinesField('fgVocabulary',
-        searchable=0,
-        required=0,
-        widget=LinesWidget(label='Options',
-            description="""
-                Use one line per option.
-                Note that this may be overridden dynamically.
-                [Note, you may optionally use a "value|label|description" format.]
-                Try to avoid using non ascii character for value.
-                """,
-            i18n_domain = "ploneformgen",
-            label_msgid = "label_fgvocabulary_text",
-            description_msgid = "help_fgvocabulary_text",
-            ),
-        )
+import cgi
+
 
 class StringVocabularyField(StringField):
     """
@@ -59,7 +41,7 @@ class StringVocabularyField(StringField):
 
         vl = fieldContainer.getFgTVocabulary()
         if vl is not None:
-            return DisplayList( data=vl )
+            return DisplayList(data=vl)
 
         res = []
         for line in fieldContainer.fgVocabulary:
@@ -73,16 +55,20 @@ class StringVocabularyField(StringField):
             res.append(item)
         return res
 
+
 class SelectionStringWidget(SelectionWidget):
     _properties = SelectionWidget._properties.copy()
     _properties.update({
         'macro' : "selection_string",
         })
 
-    security = ClassSecurityInfo()
+    # security = ClassSecurityInfo()
+
 
 class PFGSelectionStringField(FGSelectionField):
     """Selection String Field"""
+
+    # schema = FGSelectionField.schema.copy()
 
     schema = BaseFieldSchemaStringDefault.copy() + Schema((
         vocabularyField,
@@ -102,17 +88,10 @@ class PFGSelectionStringField(FGSelectionField):
         ),
     ))
 
-#    del schema['hidden']
-
     finalizeFieldSchema(schema, folderish=True, moveDiscussion=False)
 
     portal_type = 'PFGSelectionStringField'
     implements(IPFGSelectionStringField)
-
-#    portal_type = meta_type = 'PFGSelectionStringField'
-#    archetype_name = 'Selection String Field'
-#    content_icon = 'ListField.gif'
-#    typeDescription= 'A selection field with string field'
 
     def __init__(self, oid, **kwargs):
         """ initialize class """
@@ -140,13 +119,6 @@ class PFGSelectionStringField(FGSelectionField):
 
         if self.fgFormat == 'radio' or (self.fgFormat == 'flex' and len(vocabulary) <= 4):
             name = '%s_%s' %(self.__name__, vu)
-#            desc = REQUEST.form.get(name, None)
-#            if item is None:
-#                return vu
-#            elif desc is None:
-#                return safe_unicode(cgi.escape(item[0].encode(charset)))
-#            else:
-#                return u'%s<br />%s' %(safe_unicode(cgi.escape(item[0].encode(charset))), safe_unicode(cgi.escape(desc.decode(charset))))
         else:
             name = '%s_SELECT' %self.__name__
         desc = REQUEST.form.get(name, None)
@@ -157,11 +129,5 @@ class PFGSelectionStringField(FGSelectionField):
         else:
             return u'%s<br />%s' %(safe_unicode(cgi.escape(item[0].encode(charset))), safe_unicode(cgi.escape(desc.decode(charset))))
 
-#            if item is None:
-#                return vu
-#            elif desc is None:
-#                return safe_unicode(cgi.escape(item[0].encode(charset)))
-#            else:
-#                return u'%s<br />%s' %(safe_unicode(cgi.escape(item[0].encode(charset))), safe_unicode(cgi.escape(desc.decode(charset))))
 
 registerATCT(PFGSelectionStringField, PROJECTNAME)
