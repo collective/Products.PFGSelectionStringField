@@ -6,7 +6,6 @@ from plone.app.testing import setRoles
 from plone.testing import layered
 from zope.testing import renormalizing
 
-import StringIO
 import doctest
 import manuel.codeblock
 import manuel.doctest

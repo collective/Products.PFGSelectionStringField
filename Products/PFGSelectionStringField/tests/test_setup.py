@@ -14,7 +14,7 @@ class TestSetup(IntegrationTestCase):
             'PFGSelectionStringField',
         ]
         self.installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.skins      = getToolByName(self.portal, 'portal_skins')
+        self.skins = getToolByName(self.portal, 'portal_skins')
         self.properties = getToolByName(self.portal, 'portal_properties')
         self.site_properties = getattr(self.properties, 'site_properties')
         self.navtree_properties = getattr(self.properties, 'navtree_properties')
@@ -65,9 +65,6 @@ class TestSetup(IntegrationTestCase):
         self.assertEquals(('fg_base_view_p3',), item.view_methods)
         aliases = {'edit': 'atct_edit', 'sharing': '@@sharing', '(Default)': '(dynamic view)', 'view': '(selected layout)'}
         self.assertEquals(aliases, item.getMethodAliases())
-        actions = [
-            (action.title, action.id, action.getActionExpression(), action.visible, action.permissions) for action in item.listActions()
-        ]
         self.assertEquals(
             [
                 ('View', 'view', 'string:${object_url}/view', True, (u'View',)),

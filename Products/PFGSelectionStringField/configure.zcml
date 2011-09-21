@@ -10,7 +10,7 @@
 
   <five:registerPackage package="." initialize=".initialize" />
   <include file="skins.zcml" />
-  <include package=".browser" />
+  <!-- <include package=".browser" /> -->
   <include package=".content" />
   <includeDependencies package="." />
 

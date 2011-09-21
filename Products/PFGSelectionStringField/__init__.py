@@ -8,7 +8,10 @@ from zope.i18nmessageid import MessageFactory
 
 PFGSelectionStringFieldMessageFactory = MessageFactory(PROJECTNAME)
 
-setDefaultRoles("Add PFGSelectionStringField", ('Manager', 'Contributor', 'Owner',))
+setDefaultRoles(
+    "Add PFGSelectionStringField",
+    ('Manager', 'Contributor', 'Owner',)
+)
 
 
 def initialize(context):
