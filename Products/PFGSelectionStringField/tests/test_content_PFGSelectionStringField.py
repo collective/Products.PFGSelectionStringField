@@ -76,10 +76,47 @@ class TestPFGSelectionStringField(unittest.TestCase):
         getToolByName().getSiteEncoding.return_value = 'utf-8'
         request.form = {}
         item.fgField = mock.Mock()
-        item.fgField.Vocabulary.return_value = (('aaa', ('AAA', 'AaA')), )
+        item.fgField.Vocabulary.return_value = [('aaa', ('aaa', None))]
         item.fgFormat = 'radio'
         self.assertEqual(item.htmlValue(request), u'')
-        request.form = {'field': 'field_bbb'}
-        self.assertEqual(item.htmlValue(request), u'field_bbb')
-        item.fgField.Vocabulary.return_value = (('field_aaa', ('AAA', 'AaA')), ('field_bbb', ('BBB', 'BbB')))
-        self.assertEqual(item.htmlValue(request), u'BBB')
+        item.fgFormat = 'flex'
+        self.assertEqual(item.htmlValue(request), u'')
+        item.fgField.Vocabulary.return_value = [
+            (u'aaa', (u'aaa', None)),
+            (u'bbb', (u'bbb', None)),
+            (u'ccc', (u'ccc', None)),
+            (u'ddd', (u'ddd', None)),
+            (u'eee', (u'eee', None)),
+        ]
+        self.assertEqual(item.htmlValue(request), u'')
+        request.form = {'field': 'aaa'}
+        item.fgField.Vocabulary.return_value = [('aaa', ('aaa', None))]
+        item.fgFormat = 'radio'
+        self.assertEqual(item.htmlValue(request), u'aaa')
+        item.fgFormat = 'flex'
+        self.assertEqual(item.htmlValue(request), u'aaa')
+        item.fgField.Vocabulary.return_value = [
+            (u'aaa', (u'aaa', None)),
+            (u'bbb', (u'bbb', None)),
+            (u'ccc', (u'ccc', None)),
+            (u'ddd', (u'ddd', None)),
+            (u'eee', (u'eee', None)),
+        ]
+        self.assertEqual(item.htmlValue(request), u'aaa')
+        item.fgFormat = 'select'
+        request.form = {'field': 'bbb'}
+        self.assertEqual(item.htmlValue(request), u'bbb')
+        item.fgField.Vocabulary.return_value = [
+            (u'aaa', (u'aaa', None)),
+            (u'bbb', (u'bbb', 'Desc of BBB')),
+            (u'ccc', (u'ccc', None)),
+            (u'ddd', (u'ddd', None)),
+            (u'eee', (u'eee', None)),
+        ]
+        self.assertEqual(item.htmlValue(request), u'bbb')
+        request.form = {'field': 'bbb', 'field_SELECT': 'SELECTION OF BBB', 'field_bbb': 'RADIO OF BBB'}
+        self.assertEqual(item.htmlValue(request), u'bbb<br />SELECTION OF BBB')
+        item.fgFormat = 'flex'
+        self.assertEqual(item.htmlValue(request), u'bbb<br />SELECTION OF BBB')
+        item.fgFormat = 'radio'
+        self.assertEqual(item.htmlValue(request), u'bbb<br />RADIO OF BBB')

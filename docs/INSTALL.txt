@@ -13,3 +13,6 @@ recipe to manage packages:
 * Re-run buildout, e.g. with::
 
     ./bin/buildout
+
+
+* Then Quick Install ``Products.PloneFormGen`` first before installing ``Products.PFGSelectionStringField``.

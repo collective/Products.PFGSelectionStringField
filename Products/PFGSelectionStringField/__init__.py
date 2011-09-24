@@ -6,7 +6,7 @@ from Products.PFGSelectionStringField.config import PROJECTNAME
 from zope.i18nmessageid import MessageFactory
 
 
-PFGSelectionStringFieldMessageFactory = MessageFactory(PROJECTNAME)
+_ = MessageFactory(PROJECTNAME)
 
 setDefaultRoles(
     "Add PFGSelectionStringField",

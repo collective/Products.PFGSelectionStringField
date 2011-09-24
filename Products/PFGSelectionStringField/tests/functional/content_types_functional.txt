@@ -28,6 +28,12 @@ Verify that we can create PFGSelectionStringField under Form Folder::
 Add PFGSelectionStringField::
 
     >>> browser.getLink(id='pfgselectionstringfield').click()
+
+Check that there is proper description for the option input::
+
+    >>> 'Use one line per option. Format: "value|label|description".' in browser.contents
+    True
+
     >>> browser.getControl(name='title').value = "Selection String Field"
     >>> browser.getControl(name="fgVocabulary:lines").value = 'aaa\nbbb|BBB\nccc|CCC|Description of C\näää\nooo|ÖÖÖ\naoa|ÅÅÅ|Descripion of Å\näöå|ÄÖÅ|Description of ÄÖÅ'
     >>> browser.getControl(name="fgFormat").value = ['radio']
