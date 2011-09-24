@@ -9,10 +9,10 @@
 <!--   <include package="Products.CMFCore" /> -->
 
   <five:registerPackage package="." initialize=".initialize" />
+  <i18n:registerTranslations directory="locales" />
   <include file="skins.zcml" />
   <include package=".content" />
   <includeDependencies package="." />
-  <i18n:registerTranslations directory="locales" />
 
   <genericsetup:registerProfile
       name="default"
