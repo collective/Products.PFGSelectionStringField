@@ -26,7 +26,7 @@ setup(
     keywords='',
     author='Taito Horiuchi',
     author_email='taito.horiuchi@gmail.com',
-    url='http://pypi.python.org/pypi/Products.PFGSelectionStringField',
+    url='https://github.com/taito/Products.PFGSelectionStringField',
     license='BSD',
     packages=find_packages(exclude=['ez_setup']),
     namespace_packages=['Products'],
