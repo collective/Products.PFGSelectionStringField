@@ -1,4 +1,4 @@
-Products/PFGExtendedAdapter/docs/_build/*
+Products/PFGSelectionStringField/docs/_build/*
 *.egg-info
 *.mo
 *.pyc
