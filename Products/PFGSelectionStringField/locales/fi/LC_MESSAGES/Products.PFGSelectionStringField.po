@@ -19,6 +19,5 @@ msgid "Selection String Field"
 msgstr ""
 
 #: ./content/field.py:87
-msgid "Use one line per option. Format: "value|label|description"."
+msgid "Use one line per option. Format: 'value|label|description'."
 msgstr ""
-

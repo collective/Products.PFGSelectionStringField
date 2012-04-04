@@ -85,7 +85,7 @@ class PFGSelectionStringField(FGSelectionField):
     ))
 
     schema['fgVocabulary'].widget.description = _(
-        u'Use one line per option. Format: "value|label|description".'
+        u"Use one line per option. Format: 'value|label|description'."
     )
 
     finalizeFieldSchema(schema, folderish=True, moveDiscussion=False)
