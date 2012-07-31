@@ -5,10 +5,10 @@
     meta_type="Filesystem Directory View"
     name="PFGSelectionStringField"
     />
-    <skin-path name="*">
-      <layer
-        insert-before="PloneFormGen"
-        name="PFGSelectionStringField"
-        />
+  <skin-path name="*">
+    <layer
+      insert-before="PloneFormGen"
+      name="PFGSelectionStringField"
+      />
   </skin-path>
 </object>

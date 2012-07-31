@@ -1,6 +1,5 @@
 from Products.Archetypes import atapi
 from Products.CMFCore import utils
-# from Products.CMFCore.permissions import setDefaultRoles
 from zope.i18nmessageid import MessageFactory
 
 
@@ -12,12 +11,6 @@ PROJECTNAME = "PFGSelectionStringField"
 ADD_PERMISSIONS = {
     PROJECTNAME: "Add PFGSelectionStringField",
 }
-
-
-# setDefaultRoles(
-#     "Add PFGSelectionStringField",
-#     ('Manager', 'Contributor', 'Owner',)
-# )
 
 
 def initialize(context):

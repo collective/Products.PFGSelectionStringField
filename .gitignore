@@ -1,8 +1,9 @@
-Products/PFGSelectionStringField/docs/_build/*
 *.egg-info
 *.mo
 *.pyc
 *.pyo
 *~
 .DS_Store
+.long-description.html
+Products/PFGSelectionStringField/docs/_build/*
 dist

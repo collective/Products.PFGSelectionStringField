@@ -4,13 +4,16 @@ from setuptools import setup
 import os
 
 
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+
 long_description = (
-    open("README.txt").read() + "\n" +
-    open(os.path.join("docs", "INSTALL.txt")).read() + "\n" +
-    open(os.path.join("docs", "HISTORY.txt")).read() + "\n" +
-    open(os.path.join("docs", "CONTRIBUTORS.txt")).read() + "\n" +
-    open(os.path.join("docs", "CREDITS.txt")).read()
-)
+    read('Products', 'PFGSelectionStringField', 'docs', 'README.rst') + "\n" +
+    read('Products', 'PFGSelectionStringField', 'docs', 'HISTORY.rst') + "\n" +
+    read('Products', 'PFGSelectionStringField', 'docs', 'CONTRIBUTORS.rst') + "\n" +
+    read('Products', 'PFGSelectionStringField', 'docs', 'CREDITS.rst'))
+
 
 setup(
     name='Products.PFGSelectionStringField',

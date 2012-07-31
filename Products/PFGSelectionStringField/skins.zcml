@@ -3,7 +3,7 @@
   xmlns:cmf="http://namespaces.zope.org/cmf"
   xmlns="http://namespaces.zope.org/zope"
   >
- <!-- File System Directory Views registration -->
- <cmf:registerDirectory
+  <!-- File System Directory Views registration -->
+  <cmf:registerDirectory
     name="PFGSelectionStringField"/>
 </configure>

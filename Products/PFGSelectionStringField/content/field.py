@@ -67,8 +67,8 @@ class PFGSelectionStringField(FGSelectionField):
     """Selection String Field"""
 
     schema = BaseFieldSchemaStringDefault.copy() + Schema((
-        vocabularyField,
-        vocabularyOverrideField,
+        vocabularyField.copy(),
+        vocabularyOverrideField.copy(),
         StringField('fgFormat',
             searchable=0,
             required=0,
@@ -118,16 +118,16 @@ class PFGSelectionStringField(FGSelectionField):
         vocabulary = self.fgField.Vocabulary(self)
         item = dict(vocabulary).get(vu)
         if self.fgFormat == 'radio' or (self.fgFormat == 'flex' and len(vocabulary) <= 4):
-            name = '%s_%s' % (self.__name__, vu)
+            name = u'{}_{}'.format(self.__name__, vu)
         else:
-            name = '%s_SELECT' % self.__name__
+            name = u'{}_SELECT'.format(self.__name__)
         desc = REQUEST.form.get(name, None)
         if item is None:
             return vu
         elif desc is None:
             return safe_unicode(cgi.escape(item[0].encode(charset)))
         else:
-            return u'%s<br />%s' % (safe_unicode(cgi.escape(item[0].encode(charset))), safe_unicode(cgi.escape(desc.decode(charset))))
+            return u'{}<br />{}'.format(safe_unicode(cgi.escape(item[0].encode(charset))), safe_unicode(cgi.escape(desc.decode(charset))))
 
 
 registerATCT(PFGSelectionStringField, PROJECTNAME)

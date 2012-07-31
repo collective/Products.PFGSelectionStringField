@@ -1,18 +1,14 @@
-Initial imports::
-
-    >>> from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
-
-Log in as the portal owner::
+Log in as Manager::
 
     >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
 
 Verify that we can create FormFolder under portal::
 
-    >>> browser.open(portal_url)
+    >>> browser.open('/')
     >>> browser.getLink(id='formfolder').url.endswith("createObject?type_name=FormFolder")
     True
 
-Verify that we can not PFGSelectionStringField under portal::
+Verify that we can not add PFGSelectionStringField under portal::
 
     >>> browser.getLink(id='pfgselectionstringfield').url.endswith("createObject?type_name=PFGSelectionStringField")
     Traceback (most recent call last):
@@ -31,8 +27,9 @@ Add PFGSelectionStringField::
 
 Check that there is proper description for the option input::
 
-    >>> 'Use one line per option. Format: "value|label|description".' in browser.contents
-    True
+    >>> print browser.bycss('#fgVocabulary_help')
+    --- 1 ---
+    <div class="formHelp" id="fgVocabulary_help">Use one line per option. Format: 'value|label|description'.</div>
 
     >>> browser.getControl(name='title').value = "Selection String Field"
     >>> browser.getControl(name="fgVocabulary:lines").value = 'aaa\nbbb|BBB\nccc|CCC|Description of C\näää\nooo|ÖÖÖ\naoa|ÅÅÅ|Descripion of Å\näöå|ÄÖÅ|Description of ÄÖÅ'
@@ -187,7 +184,7 @@ Log in and add thank you page to Form Folder::
 
 Log out and go to Form Folder::
 
-    >>> browser.open(portal_url)
+    >>> browser.open('/')
     >>> browser.getLink('Log out').click()
     >>> browser.open(form_url)
 
@@ -254,7 +251,7 @@ Log in and select select instead of radio::
 
 Log out and go to Form Folder::
 
-    >>> browser.open(portal_url)
+    >>> browser.open('/')
     >>> browser.getLink('Log out').click()
     >>> browser.open(form_url)
     >>> browser.getControl(name="selection-string-field").value = ['bbb']
