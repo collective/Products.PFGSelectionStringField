@@ -1,17 +1,23 @@
 from Products.Archetypes import atapi
 from Products.CMFCore import utils
-from Products.CMFCore.permissions import setDefaultRoles
-from Products.PFGSelectionStringField.config import ADD_PERMISSIONS
-from Products.PFGSelectionStringField.config import PROJECTNAME
+# from Products.CMFCore.permissions import setDefaultRoles
 from zope.i18nmessageid import MessageFactory
 
 
-_ = MessageFactory(PROJECTNAME)
+_ = MessageFactory('Products.PFGSelectionStringField')
 
-setDefaultRoles(
-    "Add PFGSelectionStringField",
-    ('Manager', 'Contributor', 'Owner',)
-)
+
+PROJECTNAME = "PFGSelectionStringField"
+
+ADD_PERMISSIONS = {
+    PROJECTNAME: "Add PFGSelectionStringField",
+}
+
+
+# setDefaultRoles(
+#     "Add PFGSelectionStringField",
+#     ('Manager', 'Contributor', 'Owner',)
+# )
 
 
 def initialize(context):
@@ -24,7 +30,7 @@ def initialize(context):
 
     for atype, constructor in zip(content_types, constructors):
         utils.ContentInit(
-        '{0}: {1}'.format(PROJECTNAME, atype.portal_type),
+        '{}: {}'.format(PROJECTNAME, atype.portal_type),
             content_types=(atype,),
             permission=ADD_PERMISSIONS[atype.portal_type],
             extra_constructors=(constructor,),

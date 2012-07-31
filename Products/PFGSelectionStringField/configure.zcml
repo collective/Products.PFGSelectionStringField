@@ -1,18 +1,20 @@
 <?xml version="1.0"?>
 <configure
-    xmlns:five="http://namespaces.zope.org/five"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    xmlns:i18n="http://namespaces.zope.org/i18n"
-    xmlns="http://namespaces.zope.org/zope"
-    i18n_domain="Products.PFGSelectionStringField">
+  i18n_domain="Products.PFGSelectionStringField"
+  xmlns:five="http://namespaces.zope.org/five"
+  xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+  xmlns:i18n="http://namespaces.zope.org/i18n"
+  xmlns="http://namespaces.zope.org/zope"
+  >
 
-<!--   <include package="Products.CMFCore" /> -->
-
+  <includeDependencies package="." />
   <five:registerPackage package="." initialize=".initialize" />
   <i18n:registerTranslations directory="locales" />
-  <include file="skins.zcml" />
-  <include package=".content" />
-  <includeDependencies package="." />
+
+  <permission
+    id="Products.PFGSelectionStringField.AddPFGSelectionStringField"
+    title="Add PFGSelectionStringField"
+    />
 
   <genericsetup:registerProfile
       name="default"
@@ -21,5 +23,8 @@
       description="Installs Products.PFGSelectionStringField package"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+
+  <include package=".content" />
+  <include file="skins.zcml" />
 
 </configure>

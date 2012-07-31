@@ -8,7 +8,7 @@ from Products.CMFCore.permissions import View
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.PFGSelectionStringField import _
-from Products.PFGSelectionStringField.config import PROJECTNAME
+from Products.PFGSelectionStringField import PROJECTNAME
 from Products.PFGSelectionStringField.interfaces import IPFGSelectionStringField
 from Products.PloneFormGen.content.fields import FGSelectionField
 from Products.PloneFormGen.content.fieldsBase import BaseFieldSchemaStringDefault

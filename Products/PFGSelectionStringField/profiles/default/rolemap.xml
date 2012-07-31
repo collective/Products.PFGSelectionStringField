@@ -2,9 +2,9 @@
 <rolemap>
   <permissions>
     <permission name="Add PFGSelectionStringField" acquire="False">
+      <role name="Editor" />
       <role name="Manager" />
-      <role name="Contributor" />
-      <role name="Owner" />
+      <role name="Site Administrator" />
     </permission>
   </permissions>
 </rolemap>
