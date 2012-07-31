@@ -11,6 +11,9 @@ Tested with
 * Plone-4.2
 * Products.PloneFormGen-1.7.1
 
+* For older version and python-2.6, use version 1.0.
+
+
 Further Documentation URL
 -------------------------
 
