@@ -9,7 +9,8 @@ This is useful when you need some comment related to the selected option.
 Tested with
 -----------
 * Plone-4.2
-* Products.PloneFormGen-1.7.1
+* Plone-4.1.6
+* Products.PloneFormGen-1.7.2
 
 * For older version and python-2.6, use version 1.0.
 

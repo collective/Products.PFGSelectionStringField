@@ -29,6 +29,4 @@ class TestStringVocabularyField(unittest.TestCase):
             [
                 ('aaa', ('aaa', None)),
                 ('aaa', ('AAA', None)),
-                ('aaa', ('AAA', 'BBB'))
-            ]
-        )
+                ('aaa', ('AAA', 'BBB'))])

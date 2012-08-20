@@ -47,12 +47,10 @@ class TestPFGSelectionStringField(unittest.TestCase):
             'contributors',
             'rights',
             'allowDiscussion',
-            'excludeFromNav',
-       ]
+            'excludeFromNav']
         self.assertEqual(
             [field.getName() for field in item.schema.getSchemataFields('default')],
-            names
-        )
+            names)
 
     def test_fgField(self):
         item = self.createPFGSelectionStringField()
@@ -86,8 +84,7 @@ class TestPFGSelectionStringField(unittest.TestCase):
             (u'bbb', (u'bbb', None)),
             (u'ccc', (u'ccc', None)),
             (u'ddd', (u'ddd', None)),
-            (u'eee', (u'eee', None)),
-        ]
+            (u'eee', (u'eee', None))]
         self.assertEqual(item.htmlValue(request), u'')
         request.form = {'field': 'aaa'}
         item.fgField.Vocabulary.return_value = [('aaa', ('aaa', None))]
@@ -100,8 +97,7 @@ class TestPFGSelectionStringField(unittest.TestCase):
             (u'bbb', (u'bbb', None)),
             (u'ccc', (u'ccc', None)),
             (u'ddd', (u'ddd', None)),
-            (u'eee', (u'eee', None)),
-        ]
+            (u'eee', (u'eee', None))]
         self.assertEqual(item.htmlValue(request), u'aaa')
         item.fgFormat = 'select'
         request.form = {'field': 'bbb'}
@@ -111,8 +107,7 @@ class TestPFGSelectionStringField(unittest.TestCase):
             (u'bbb', (u'bbb', 'Desc of BBB')),
             (u'ccc', (u'ccc', None)),
             (u'ddd', (u'ddd', None)),
-            (u'eee', (u'eee', None)),
-        ]
+            (u'eee', (u'eee', None))]
         self.assertEqual(item.htmlValue(request), u'bbb')
         request.form = {'field': 'bbb', 'field_SELECT': 'SELECTION OF BBB', 'field_bbb': 'RADIO OF BBB'}
         self.assertEqual(item.htmlValue(request), u'bbb<br />SELECTION OF BBB')

@@ -18,7 +18,7 @@ long_description = (
 setup(
     name='Products.PFGSelectionStringField',
     version='2.0',
-    description="Selection field type with string field for Products.PloneFormGen.",
+    description="Adds selection field type with string field to Products.PloneFormGen.",
     long_description=long_description,
     # Get more strings from
     # http://pypi.python.org/pypi?%3Aaction=list_classifiers

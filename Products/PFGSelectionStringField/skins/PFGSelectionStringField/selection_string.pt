@@ -45,10 +45,6 @@
                                                value python:item[0];"
                                />
 
-<!--                        <label tal:content="python:here.translate(vocab.getMsgId(item), default=vocab.getValue(item))"-->
-<!--                               i18n:translate=""-->
-<!--                               tal:attributes="for string:${fieldName}_${repeat/item/number}" />-->
-
                         <label tal:content="python:item[1][0]"
                                i18n:translate=""
                                tal:attributes="for string:${fieldName}_${repeat/item/number}" />

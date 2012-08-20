@@ -18,5 +18,4 @@ class TestSelectionStringWidget(unittest.TestCase):
         widget = self.createSelectionStringWidget()
         self.assertEqual(
             widget._properties['macro'],
-            "selection_string"
-        )
+            "selection_string")

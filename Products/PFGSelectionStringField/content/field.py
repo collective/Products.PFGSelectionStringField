@@ -58,9 +58,7 @@ class StringVocabularyField(StringField):
 
 class SelectionStringWidget(SelectionWidget):
     _properties = SelectionWidget._properties.copy()
-    _properties.update({
-        'macro': "selection_string",
-        })
+    _properties.update({'macro': "selection_string"})
 
 
 class PFGSelectionStringField(FGSelectionField):
@@ -69,7 +67,8 @@ class PFGSelectionStringField(FGSelectionField):
     schema = BaseFieldSchemaStringDefault.copy() + Schema((
         vocabularyField.copy(),
         vocabularyOverrideField.copy(),
-        StringField('fgFormat',
+        StringField(
+            name='fgFormat',
             searchable=0,
             required=0,
             default='flex',
@@ -79,14 +78,10 @@ class PFGSelectionStringField(FGSelectionField):
                 label='Presentation Widget',
                 i18n_domain="ploneformgen",
                 label_msgid="label_fgformat_text",
-                description_msgid="help_fgformat_text",
-                ),
-        ),
-    ))
+                description_msgid="help_fgformat_text"))))
 
     schema['fgVocabulary'].widget.description = _(
-        u"Use one line per option. Format: 'value|label|description'."
-    )
+        u"Use one line per option. Format: 'value|label|description'.")
 
     finalizeFieldSchema(schema, folderish=True, moveDiscussion=False)
 
@@ -100,14 +95,13 @@ class PFGSelectionStringField(FGSelectionField):
 
         # set a preconfigured field as an instance attribute
         self.fgField = StringVocabularyField(
-            'fg_selection_field',
+            name='fg_selection_field',
             searchable=0,
             required=0,
             widget=SelectionStringWidget(),
             vocabulary='_get_selection_vocab',
             enforceVocabulary=1,
-            write_permission=View,
-            )
+            write_permission=View)
 
     def htmlValue(self, REQUEST):
         """ Return value instead of key """

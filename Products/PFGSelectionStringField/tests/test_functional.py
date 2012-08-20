@@ -50,16 +50,13 @@ def setUp(self):
     portal.invokeFactory(
         'FormFolder',
         'form',
-        title="Form Folder",
-    )
+        title="Form Folder")
     form = portal.form
     form_url = form.absolute_url()
-    self.globs.update(
-        {
-            'form': form,
-            'form_url': form_url,
-        }
-    )
+    self.globs.update({
+        'form': form,
+        'form_url': form_url,
+    })
     for key in form.keys():
         del form[key]
     form.thanksPage = ''
@@ -95,5 +92,4 @@ def DocFileSuite(testfile, flags=FLAGS, setUp=setUp, layer=FUNCTIONAL_TESTING):
 
 def test_suite():
     return unittest.TestSuite([
-        DocFileSuite('functional/browser.txt'),
-        ])
+        DocFileSuite('functional/browser.txt')])
