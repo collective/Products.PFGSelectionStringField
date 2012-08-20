@@ -8,6 +8,7 @@ This is useful when you need some comment related to the selected option.
 
 Tested with
 -----------
+
 * Plone-4.2
 * Plone-4.1.6
 * Products.PloneFormGen-1.7.2
