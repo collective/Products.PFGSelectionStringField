@@ -1,8 +1,7 @@
 <configure
   i18n_domain="Products.PFGSelectionStringField"
   xmlns:five="http://namespaces.zope.org/five"
-  xmlns="http://namespaces.zope.org/zope"
-  >
+  xmlns="http://namespaces.zope.org/zope">
 
   <class class=".field.StringVocabularyField">
     <require

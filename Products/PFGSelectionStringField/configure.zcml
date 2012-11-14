@@ -1,11 +1,9 @@
-<?xml version="1.0"?>
 <configure
   i18n_domain="Products.PFGSelectionStringField"
   xmlns:five="http://namespaces.zope.org/five"
   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
   xmlns:i18n="http://namespaces.zope.org/i18n"
-  xmlns="http://namespaces.zope.org/zope"
-  >
+  xmlns="http://namespaces.zope.org/zope">
 
   <includeDependencies package="." />
   <five:registerPackage package="." initialize=".initialize" />
@@ -17,12 +15,12 @@
     />
 
   <genericsetup:registerProfile
-      name="default"
-      title="Products.PFGSelectionStringField"
-      directory="profiles/default"
-      description="Installs Products.PFGSelectionStringField package"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
+    name="default"
+    title="Products.PFGSelectionStringField"
+    directory="profiles/default"
+    description="Installs Products.PFGSelectionStringField package"
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    />
 
   <include package=".content" />
   <include file="skins.zcml" />

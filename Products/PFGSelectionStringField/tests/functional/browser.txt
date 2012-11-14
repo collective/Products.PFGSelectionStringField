@@ -29,7 +29,7 @@ Check that there is proper description for the option input::
 
     >>> print browser.bycss('#fgVocabulary_help')
     --- 1 ---
-    <div class="formHelp" id="fgVocabulary_help">Use one line per option. Format: 'value|label|description'.</div>
+    <span class="formHelp" id="fgVocabulary_help">Use one line per option. Format: 'value|label|description'.</span>
 
     >>> browser.getControl(name='title').value = "Selection String Field"
     >>> browser.getControl(name="fgVocabulary:lines").value = 'aaa\nbbb|BBB\nccc|CCC|Description of C\näää\nooo|ÖÖÖ\naoa|ÅÅÅ|Descripion of Å\näöå|ÄÖÅ|Description of ÄÖÅ'

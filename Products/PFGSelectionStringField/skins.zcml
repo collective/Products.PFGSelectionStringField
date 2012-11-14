@@ -1,9 +1,7 @@
 <configure
   i18n_domain="Products.PFGSelectionStringField"
   xmlns:cmf="http://namespaces.zope.org/cmf"
-  xmlns="http://namespaces.zope.org/zope"
-  >
+  xmlns="http://namespaces.zope.org/zope">
   <!-- File System Directory Views registration -->
-  <cmf:registerDirectory
-    name="PFGSelectionStringField"/>
+  <cmf:registerDirectory name="PFGSelectionStringField"/>
 </configure>

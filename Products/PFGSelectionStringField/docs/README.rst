@@ -6,15 +6,13 @@ Products.PFGSelectionStringField
 
 This is useful when you need some comment related to the selected option.
 
-Tested with
------------
+Currently tested with
+---------------------
 
-* Plone-4.2
-* Plone-4.1.6
-* Products.PloneFormGen-1.7.2
+* Plone-4.2.2
+* Products.PloneFormGen-1.7.4
 
 * For older version and python-2.6, use version 1.0.
-
 
 Further Documentation URL
 -------------------------

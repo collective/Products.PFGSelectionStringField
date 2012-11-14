@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-09-24 11:43+0000\n"
+"POT-Creation-Date: 2012-11-14 18:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Selection String Field"
 msgstr ""
 
-#: ./content/field.py:87
-msgid "Use one line per option. Format: "value|label|description"."
+#: ./content/field.py:83
+msgid "Use one line per option. Format: 'value|label|description'."
 msgstr ""
 
