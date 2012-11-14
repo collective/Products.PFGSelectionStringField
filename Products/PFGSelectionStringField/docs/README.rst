@@ -4,7 +4,7 @@ Products.PFGSelectionStringField
 
 ``Products.PFGSelectionStringField`` provides selection field with string field for ``PloneFormGen``.
 
-This is useful when you need some comment related to the selected option.
+This is useful when you need some comments related to the selected option.
 
 Currently tested with
 ---------------------
