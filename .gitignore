@@ -5,5 +5,5 @@
 *~
 .DS_Store
 .long-description.html
-Products/PFGSelectionStringField/docs/_build/*
+src/Products/PFGSelectionStringField/docs/_build/*
 dist
