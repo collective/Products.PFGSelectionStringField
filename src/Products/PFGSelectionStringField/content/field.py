@@ -55,6 +55,11 @@ class StringVocabularyField(StringField):
             res.append(item)
         return res
 
+    def has_string(self, item):
+        if isinstance(item[1][1], unicode):
+            return True
+        return False
+
 
 class SelectionStringWidget(SelectionWidget):
     _properties = SelectionWidget._properties.copy()
