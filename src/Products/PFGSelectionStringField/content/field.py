@@ -56,6 +56,10 @@ class StringVocabularyField(StringField):
         return res
 
     def has_string(self, item):
+        """Returns True if item should have string field else False
+
+        :rtype: bool
+        """
         if isinstance(item[1][1], unicode):
             return True
         return False

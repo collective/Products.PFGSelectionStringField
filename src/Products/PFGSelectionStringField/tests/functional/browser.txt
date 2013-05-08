@@ -15,7 +15,7 @@ Verify that we can not add PFGSelectionStringField under portal::
     ...
     LinkNotFoundError
 
-Verify that we can create PFGSelectionStringField under Form Folder::
+Verify that we can add PFGSelectionStringField under Form Folder::
 
     >>> browser.open(form_url)
     >>> browser.getLink(id='pfgselectionstringfield').url.endswith("createObject?type_name=PFGSelectionStringField")
@@ -32,26 +32,33 @@ Check that there is proper description for the option input::
     <span class="formHelp" id="fgVocabulary_help">Use one line per option. Format: 'value|label|description'.</span>
 
     >>> browser.getControl(name='title').value = "Selection String Field"
-    >>> browser.getControl(name="fgVocabulary:lines").value = 'aaa\nbbb|BBB\nccc|CCC|Description of C\näää\nooo|ÖÖÖ\naoa|ÅÅÅ|Descripion of Å\näöå|ÄÖÅ|Description of ÄÖÅ'
+    >>> browser.getControl(name="fgVocabulary:lines").value = 'aaa\nbbb|BBB\nccc|CCC|\nddd|DDD|Description of DDD\näää\nooo|ÖÖÖ\naoa|ÅÅÅ|Descripion of ÅÅÅ'
     >>> browser.getControl(name="fgFormat").value = ['radio']
     >>> browser.getControl('Save').click()
 
-    >>> 'type="radio"' in browser.contents
-    True
-    >>> 'value="aaa"' in browser.contents
-    True
-    >>> 'value="bbb"' in browser.contents
-    True
-    >>> 'BBB' in browser.contents
-    True
-    >>> 'value="ccc"' in browser.contents
-    True
-    >>> 'CCC' in browser.contents
-    True
-    >>> 'Description of C' in browser.contents
-    True
-    >>> 'name="selection-string-field_ccc"' in browser.contents
-    True
+    >>> print browser.bycss('#selection-string-field')
+    --- 1 ---
+    <span id="selection-string-field">
+    <div class="formQuestion label">
+    Selection String Field
+    <span class="formHelp" id="selection-string-field_help"></span>
+    </div>
+    <input type="hidden" name="ssf_id" value="selection-string-field"><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_1" value="aaa"><label for="selection-string-field_1">aaa</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_2" value="bbb"><label for="selection-string-field_2">BBB</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_3" value="ccc"><label for="selection-string-field_3">CCC</label>
+    <br><div>
+    <input type="text" value="" name="selection-string-field_ccc"></div>
+    <input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_4" value="ddd"><label for="selection-string-field_4">DDD</label>
+    <br><div>
+    Description of DDD
+    <input type="text" value="" name="selection-string-field_ddd"></div>
+    <input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_5" value="&#228;&#228;&#228;"><label for="selection-string-field_5">&#228;&#228;&#228;</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_6" value="ooo"><label for="selection-string-field_6">&#214;&#214;&#214;</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_7" value="aoa"><label for="selection-string-field_7">&#197;&#197;&#197;</label>
+    <br><div>
+    Descripion of &#197;&#197;&#197;
+    <input type="text" value="" name="selection-string-field_aoa"></div>
+    </span>
     >>> field = form['selection-string-field']
     >>> field_url = field.absolute_url()
 
@@ -63,8 +70,7 @@ Hide Field::
     >>> browser.getControl("Save").click()
     >>> browser.url
     'http://nohost/plone/form/selection-string-field/view'
-    >>> 'name="selection-string-field_ccc"' in browser.contents
-    False
+    >>> print browser.bycss('#selection-string-field')
 
 Uncheck Hidden and change field type to select::
 
@@ -75,20 +81,10 @@ Uncheck Hidden and change field type to select::
     >>> browser.getControl("Save").click()
     >>> browser.url
     'http://nohost/plone/form/selection-string-field/view'
-    >>> '<option value="aaa">aaa</option>' in browser.contents
-    True
-    >>> '<option value="bbb">BBB</option>' in browser.contents
-    True
-    >>> '<option value="ccc">CCC</option>' in browser.contents
-    True
-    >>> '<option value="äää">äää</option>' in browser.contents
-    True
-    >>> '<option value="ooo">ÖÖÖ</option>' in browser.contents
-    True
-    >>> '<option value="aoa">ÅÅÅ</option>' in browser.contents
-    True
-    >>> '<option value="äöå">ÄÖÅ</option>' in browser.contents
-    True
+    >>> print browser.bycss('#selection-string-field')
+    --- 1 ---
+    <select id="selection-string-field" name="selection-string-field"><option value="aaa">aaa</option><option value="bbb">BBB</option><option value="ccc">CCC</option><option value="ddd">DDD</option><option value="&#228;&#228;&#228;">&#228;&#228;&#228;</option><option value="ooo">&#214;&#214;&#214;</option><option value="aoa">&#197;&#197;&#197;</option></select>
+
     >>> 'name="selection-string-field_SELECT"' in browser.contents
     True
 
@@ -97,26 +93,43 @@ Change field type to flex::
     >>> browser.getLink('Edit').click()
     >>> browser.getControl(name="fgFormat").value = ['flex']
     >>> browser.getControl("Save").click()
-    >>> browser.open(field_url)
-    >>> '<option value="aaa">aaa</option>' in browser.contents
-    True
-    >>> '<option value="bbb">BBB</option>' in browser.contents
-    True
-    >>> '<option value="ccc">CCC</option>' in browser.contents
-    True
-    >>> '<option value="äää">äää</option>' in browser.contents
-    True
-    >>> '<option value="ooo">ÖÖÖ</option>' in browser.contents
-    True
-    >>> '<option value="aoa">ÅÅÅ</option>' in browser.contents
-    True
-    >>> '<option value="äöå">ÄÖÅ</option>' in browser.contents
-    True
+    >>> browser.url
+    'http://nohost/plone/form/selection-string-field/view'
+    >>> print browser.bycss('#selection-string-field')
+    --- 1 ---
+    <select id="selection-string-field" name="selection-string-field"><option value="aaa">aaa</option><option value="bbb">BBB</option><option value="ccc">CCC</option><option value="ddd">DDD</option><option value="&#228;&#228;&#228;">&#228;&#228;&#228;</option><option value="ooo">&#214;&#214;&#214;</option><option value="aoa">&#197;&#197;&#197;</option></select>
+
     >>> 'name="selection-string-field_SELECT"' in browser.contents
     True
+
     >>> browser.getLink('Edit').click()
     >>> browser.getControl(name="fgFormat").value = ['radio']
     >>> browser.getControl("Save").click()
+    >>> browser.url
+    'http://nohost/plone/form/selection-string-field/view'
+    >>> print browser.bycss('#selection-string-field')
+    --- 1 ---
+    <span id="selection-string-field">
+    <div class="formQuestion label">
+    Selection String Field
+    <span class="formHelp" id="selection-string-field_help"></span>
+    </div>
+    <input type="hidden" name="ssf_id" value="selection-string-field"><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_1" value="aaa"><label for="selection-string-field_1">aaa</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_2" value="bbb"><label for="selection-string-field_2">BBB</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_3" value="ccc"><label for="selection-string-field_3">CCC</label>
+    <br><div>
+    <input type="text" value="" name="selection-string-field_ccc"></div>
+    <input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_4" value="ddd"><label for="selection-string-field_4">DDD</label>
+    <br><div>
+    Description of DDD
+    <input type="text" value="" name="selection-string-field_ddd"></div>
+    <input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_5" value="&#228;&#228;&#228;"><label for="selection-string-field_5">&#228;&#228;&#228;</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_6" value="ooo"><label for="selection-string-field_6">&#214;&#214;&#214;</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_7" value="aoa"><label for="selection-string-field_7">&#197;&#197;&#197;</label>
+    <br><div>
+    Descripion of &#197;&#197;&#197;
+    <input type="text" value="" name="selection-string-field_aoa"></div>
+    </span>
 
 Log out and submit::
 
@@ -188,6 +201,13 @@ Log out and go to Form Folder::
     >>> browser.getLink('Log out').click()
     >>> browser.open(form_url)
 
+    >>> print browser.bycss('.formQuestion')
+    --- 1 ---
+    <div class="formQuestion label">
+    Selection String Field
+    <span class="formHelp" id="selection-string-field_help"></span>
+    </div>
+
     >>> browser.getControl(name="selection-string-field").value = ['bbb']
     >>> browser.getControl(name="selection-string-field_ccc").value = 'Some Description'
     >>> browser.getControl(name="form_submit").click()
@@ -232,10 +252,10 @@ Log out and go to Form Folder::
     >>> 'Some Description ÄÖÅ' in browser.contents
     True
     >>> browser.open(form_url)
-    >>> browser.getControl(name="selection-string-field").value = ['äöå']
-    >>> browser.getControl(name="selection-string-field_äöå").value = 'Some Description'
+    >>> browser.getControl(name="selection-string-field").value = ['aoa']
+    >>> browser.getControl(name="selection-string-field_ddd").value = 'Some Description'
     >>> browser.getControl(name="form_submit").click()
-    >>> 'ÄÖÅ' in browser.contents
+    >>> 'ÅÅÅ' in browser.contents
     True
     >>> 'Some Description' in browser.contents
     False

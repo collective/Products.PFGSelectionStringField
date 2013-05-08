@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+2.5 (2013-05-08)
+================
+
+- Showed label on form folder. [taito]
+- Enabled string field without no description. [taito]
+
 2.4 (2013-05-06)
 ================
 
