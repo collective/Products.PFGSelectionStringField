@@ -16,7 +16,7 @@ long_description = (
 
 setup(
     name='Products.PFGSelectionStringField',
-    version='2.4',
+    version='2.5',
     description="Adds selection field type with string field to Products.PloneFormGen.",
     long_description=long_description,
     classifiers=[
