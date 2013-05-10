@@ -16,12 +16,11 @@ long_description = (
 
 setup(
     name='Products.PFGSelectionStringField',
-    version='2.5',
+    version='2.5.1',
     description="Adds selection field type with string field to Products.PloneFormGen.",
     long_description=long_description,
     classifiers=[
         "Framework :: Plone",
-        "Framework :: Plone :: 4.2",
         "Framework :: Plone :: 4.3",
         "License :: OSI Approved :: BSD License",
         "Programming Language :: Python",
