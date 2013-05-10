@@ -43,18 +43,18 @@ Check that there is proper description for the option input::
     Selection String Field
     <span class="formHelp" id="selection-string-field_help"></span>
     </div>
-    <input type="hidden" name="ssf_id" value="selection-string-field"><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_1" value="aaa"><label for="selection-string-field_1">aaa</label>
-    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_2" value="bbb"><label for="selection-string-field_2">BBB</label>
-    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_3" value="ccc"><label for="selection-string-field_3">CCC</label>
+    <input type="hidden" name="ssf_id" value="selection-string-field"><input class="noborder" type="radio" name="selection-string-field" value="aaa" id="selection-string-field_1"><label for="selection-string-field_1">aaa</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" value="bbb" id="selection-string-field_2"><label for="selection-string-field_2">BBB</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" value="ccc" id="selection-string-field_3"><label for="selection-string-field_3">CCC</label>
     <br><div>
     <input type="text" value="" name="selection-string-field_ccc"></div>
-    <input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_4" value="ddd"><label for="selection-string-field_4">DDD</label>
+    <input class="noborder" type="radio" name="selection-string-field" value="ddd" id="selection-string-field_4"><label for="selection-string-field_4">DDD</label>
     <br><div>
     Description of DDD
     <input type="text" value="" name="selection-string-field_ddd"></div>
-    <input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_5" value="&#228;&#228;&#228;"><label for="selection-string-field_5">&#228;&#228;&#228;</label>
-    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_6" value="ooo"><label for="selection-string-field_6">&#214;&#214;&#214;</label>
-    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_7" value="aoa"><label for="selection-string-field_7">&#197;&#197;&#197;</label>
+    <input class="noborder" type="radio" name="selection-string-field" value="&#228;&#228;&#228;" id="selection-string-field_5"><label for="selection-string-field_5">&#228;&#228;&#228;</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" value="ooo" id="selection-string-field_6"><label for="selection-string-field_6">&#214;&#214;&#214;</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" value="aoa" id="selection-string-field_7"><label for="selection-string-field_7">&#197;&#197;&#197;</label>
     <br><div>
     Descripion of &#197;&#197;&#197;
     <input type="text" value="" name="selection-string-field_aoa"></div>
@@ -114,18 +114,18 @@ Change field type to flex::
     Selection String Field
     <span class="formHelp" id="selection-string-field_help"></span>
     </div>
-    <input type="hidden" name="ssf_id" value="selection-string-field"><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_1" value="aaa"><label for="selection-string-field_1">aaa</label>
-    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_2" value="bbb"><label for="selection-string-field_2">BBB</label>
-    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_3" value="ccc"><label for="selection-string-field_3">CCC</label>
+    <input type="hidden" name="ssf_id" value="selection-string-field"><input class="noborder" type="radio" name="selection-string-field" value="aaa" id="selection-string-field_1"><label for="selection-string-field_1">aaa</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" value="bbb" id="selection-string-field_2"><label for="selection-string-field_2">BBB</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" value="ccc" id="selection-string-field_3"><label for="selection-string-field_3">CCC</label>
     <br><div>
     <input type="text" value="" name="selection-string-field_ccc"></div>
-    <input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_4" value="ddd"><label for="selection-string-field_4">DDD</label>
+    <input class="noborder" type="radio" name="selection-string-field" value="ddd" id="selection-string-field_4"><label for="selection-string-field_4">DDD</label>
     <br><div>
     Description of DDD
     <input type="text" value="" name="selection-string-field_ddd"></div>
-    <input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_5" value="&#228;&#228;&#228;"><label for="selection-string-field_5">&#228;&#228;&#228;</label>
-    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_6" value="ooo"><label for="selection-string-field_6">&#214;&#214;&#214;</label>
-    <br><input class="noborder" type="radio" name="selection-string-field" id="selection-string-field_7" value="aoa"><label for="selection-string-field_7">&#197;&#197;&#197;</label>
+    <input class="noborder" type="radio" name="selection-string-field" value="&#228;&#228;&#228;" id="selection-string-field_5"><label for="selection-string-field_5">&#228;&#228;&#228;</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" value="ooo" id="selection-string-field_6"><label for="selection-string-field_6">&#214;&#214;&#214;</label>
+    <br><input class="noborder" type="radio" name="selection-string-field" value="aoa" id="selection-string-field_7"><label for="selection-string-field_7">&#197;&#197;&#197;</label>
     <br><div>
     Descripion of &#197;&#197;&#197;
     <input type="text" value="" name="selection-string-field_aoa"></div>
