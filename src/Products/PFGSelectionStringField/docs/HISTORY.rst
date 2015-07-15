@@ -5,7 +5,7 @@ Changelog
 ================
 
 - Fix test. [taito]
-- Add dependency to Products.CMFPlacefulWorkflow for test. [taito]
+- Add dependency to Products.CMFPlacefulWorkflow for test. [taito]
 
 2.5.1 (2013-05-10)
 ==================
