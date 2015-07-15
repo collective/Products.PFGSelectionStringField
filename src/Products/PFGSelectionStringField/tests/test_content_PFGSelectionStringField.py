@@ -32,6 +32,7 @@ class TestPFGSelectionStringField(unittest.TestCase):
             'description',
             'required',
             'hidden',
+            'placeholder',
             'fgDefault',
             'fgVocabulary',
             'fgFormat',
