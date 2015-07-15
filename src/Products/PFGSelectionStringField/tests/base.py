@@ -14,6 +14,8 @@ class PFGSelectionStringFieldLayer(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         """Set up Zope."""
         # Load ZCML
+        import Products.CMFPlacefulWorkflow
+        self.loadZCML(package=Products.CMFPlacefulWorkflow)
         import Products.PloneFormGen
         self.loadZCML(package=Products.PloneFormGen)
         z2.installProduct(app, 'Products.PloneFormGen')
